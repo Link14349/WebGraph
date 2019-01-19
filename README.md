@@ -63,7 +63,7 @@ This file can set which fields are not included in the url, and each field is se
 
 ## Use sample
 ```
-python main.py
+$: python main.py
 The url to be crawled: http://yhzheng.com:30/text/id?id=8
 End crawling after a few seconds: 5
 Illegal urls: .mod; .css; .js; .png; .jpg; .gif; .jpeg; .ico; .bmp; .dtd; .svg;
