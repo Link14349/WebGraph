@@ -59,7 +59,21 @@ rcFile.close()
 ```
 
 ## .wpgrc File
-This file can set which fields are not included in the url, and each field is separated by a newline.
+This file can set which fields are not included in the url, and each field is separated by a newline.  
+demo:  
+```
+.mod
+.css
+.js
+.png
+.jpg
+.gif
+.jpeg
+.ico
+.bmp
+.dtd
+.svg
+```
 
 ## Use sample
 ```
