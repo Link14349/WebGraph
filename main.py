@@ -10,13 +10,18 @@ url = raw_input("The url to be crawled: ")
 # url = "http://yhzheng.com:30/text/id?id=6"
 gotUrls = {}
 waitTime = input("End crawling after a few seconds: ")
+# Get all illegal fields
 rcFile = open(".wpgrc")
 rc = rcFile.read()
 rc = rc.split("\n")
+# show the illegal fields
 rcs = "Illegal urls: "
 for i in rc:
     rcs += i + "; "
 print("\033[34m" + rcs + "\033[0m")
+# to get the content of url and push it to the gotUrls then get its weight.
+# Next, it will find all of its links and get they
+# ......
 def get(pu, url):
     global gotUrls
     global rc
@@ -27,8 +32,9 @@ def get(pu, url):
     # print("URL1: " + url)
     # url = tmp[0] + "://" + tmp[1]
     # print("URL2: " + url)
-    if gotUrls.has_key(url):
+    if gotUrls.has_key(url): # got this url
         print("\033[36mGot a found url.\033[0m")
+        # get its weight
         gotUrls[url].links.append(webpage(pu, gotUrls[pu].weight))
         gotUrls[url].weight = weight(gotUrls[url].links)
         # print(gotUrls[url].links)
@@ -36,9 +42,11 @@ def get(pu, url):
         print("Getting " + url + " ......")
         try:
             content = urllib2.urlopen(url).read()
+            # delete html tags
             reg = re.compile('<[^>]*>')
             content = reg.sub(" ", content)
             # print(content)
+            # find all links
             links = re.findall(re.compile(r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"),
                                 content)
         except BaseException:
@@ -48,10 +56,11 @@ def get(pu, url):
         print("\033[33mParsing webpage......\033[0m")
         # print(content)
         gotUrls[url] = webpage(url)
+    # foreach every links of it
     for i in links:
         flag = False
         for j in rc:
-            if j in i:
+            if j in i: # it means this link has a illegal fields
                 flag = True
                 break
         if flag:
@@ -60,6 +69,7 @@ def get(pu, url):
         # tmp = urlparse.urlparse(i)
         # print("URL1: " + url)
         # i = tmp[0] + "://" + tmp[1]
+        # dfs
         get(url, i)
 
 # get("", url)
